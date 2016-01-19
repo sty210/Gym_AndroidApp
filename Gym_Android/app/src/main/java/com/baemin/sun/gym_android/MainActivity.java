@@ -69,16 +69,16 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_gym) {
             Intent intent = new Intent(MainActivity.this,SearchGym.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_region) {
             Intent intent = new Intent(MainActivity.this,SearchGymByRegion.class);
             startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_bmi) {
             Intent intent = new Intent(MainActivity.this,BMI.class);
             startActivity(intent);
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_part) {
             Intent intent = new Intent(MainActivity.this,SearchExerciseByPart.class);
             startActivity(intent);
         } /*else if (id == R.id.nav_share) {

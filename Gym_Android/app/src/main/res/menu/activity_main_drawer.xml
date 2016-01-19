@@ -3,19 +3,19 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_gym"
             android:icon="@drawable/ic_menu_camera"
-            android:title="헬스장검색" />
+            android:title="헬스장찾기" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/nav_region"
             android:icon="@drawable/ic_menu_gallery"
             android:title="지역별검색" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_bmi"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="BMI검사" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_part"
             android:icon="@drawable/ic_menu_manage"
             android:title="부위별운동법" />
     </group>

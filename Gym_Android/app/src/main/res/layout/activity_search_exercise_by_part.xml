@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.3"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:background="#fff">
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -36,8 +37,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#ddd">
+        android:background="#eee">
         <ListView
+            android:id="@+id/lv_search_exercise_by_part"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </ListView>
