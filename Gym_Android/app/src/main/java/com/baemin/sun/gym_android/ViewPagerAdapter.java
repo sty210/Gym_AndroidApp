@@ -41,7 +41,11 @@ public class ViewPagerAdapter extends PagerAdapter {
         //ImageView에 현재 position 번째에 해당하는 이미지를 보여주기 위한 작업
         //현재 position에 해당하는 이미지를 setting
 
-        //img.setImageResource(R.drawable.gym+position);
+        if(position == 0){img.setImageResource(R.drawable.gym1);}
+        else if(position == 1){img.setImageResource(R.drawable.gym2);}
+        else if(position == 2){img.setImageResource(R.drawable.gym3);}
+        else if(position == 3){img.setImageResource(R.drawable.gym4);}
+        else if(position == 4){img.setImageResource(R.drawable.gym5);}
 
         //ViewPager에 만들어 낸 View 추가
         container.addView(view);

@@ -19,7 +19,7 @@ public class ExerciseExplanation extends AppCompatActivity {
 
         ImageView image =(ImageView)this.findViewById(R.id.iv_exep);
         TextView tv = (TextView)this.findViewById(R.id.tv_exep);
-        tv.setText("운동법 : 그냥 열심히 하면 다 됩니다. ^^");
+        tv.setText("운동법 : 위 동작을 주 3일, 15회 1세트씩 하루에 총 3세트씩.. 그냥 열심히 하면 다 됩니다. ^^ 식사량 조절은 뭐 알아서 하는걸로~~");
 
         if(id==1){image.setImageResource(R.drawable.ex1);}
         else if(id==2){image.setImageResource(R.drawable.ex2);}
