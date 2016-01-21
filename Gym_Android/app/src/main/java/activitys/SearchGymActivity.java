@@ -1,4 +1,4 @@
-package com.baemin.sun.gym_android;
+package activitys;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,9 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.baemin.sun.gym_android.R;
+import com.baemin.sun.Adapters.RowData;
+import com.baemin.sun.Adapters.RowDataAdapter;
+
 import java.util.ArrayList;
 
-public class BMI extends AppCompatActivity {
+public class SearchGymActivity extends AppCompatActivity {
 
     ArrayList<RowData> datas = new ArrayList<RowData>();
     ListView listview;
@@ -17,21 +21,21 @@ public class BMI extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bmi);
+        setContentView(R.layout.activity_search_gym);
+/*
+        datas.add(new RowData(1, "태준헬스장", R.drawable.gym1));
+        datas.add(new RowData(2, "용대헬스장", R.drawable.gym2));
+        datas.add( new RowData(3, "태양헬스장", R.drawable.gym3));
+        datas.add( new RowData(4, "여은헬스장", R.drawable.gym4));
+        datas.add( new RowData(5, "은여헬스장", R.drawable.gym5));
+        datas.add( new RowData(6, "양태헬스장", R.drawable.gym6));
+        datas.add( new RowData(7, "대용헬스장", R.drawable.gym7));
+        datas.add( new RowData(8, "준태헬스장", R.drawable.gym8));
+        datas.add( new RowData(9, "썬스장", R.drawable.gym9));
+*/
+        listview= (ListView)findViewById(R.id.lv_search_gym);
 
-        datas.add(new RowData(1, "벤치프레스", R.drawable.ex1));
-        datas.add(new RowData(2, "덤벨킥백", R.drawable.ex2));
-        datas.add( new RowData(3, "런지", R.drawable.ex3));
-        datas.add( new RowData(4, "스쿼트", R.drawable.ex4));
-        datas.add( new RowData(5, "니업", R.drawable.ex5));
-        datas.add( new RowData(6, "데드리프트", R.drawable.ex6));
-        datas.add( new RowData(7, "로프크런치", R.drawable.ex7));
-        datas.add( new RowData(8, "풀업", R.drawable.ex8));
-        datas.add( new RowData(9, "풀다운", R.drawable.ex9));
-
-        listview= (ListView)findViewById(R.id.lv_bmi);
-
-        RowDataAdapter adapter= new RowDataAdapter( getLayoutInflater() , datas);
+        RowDataAdapter adapter= new RowDataAdapter(getApplicationContext(), getLayoutInflater() , datas);
 
         listview.setAdapter(adapter);
         listview.setOnItemClickListener(listener);
@@ -43,7 +47,7 @@ public class BMI extends AppCompatActivity {
         //네번재 파리미터 : 클릭된 아이템의 아이디(특별한 설정이 없다면 세번째 파라이터인 position과 같은 값)
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            Intent intent = new Intent(getApplicationContext(),ExerciseExplanation.class);
+            Intent intent = new Intent(getApplicationContext(),SearchGymDetailActivity.class);
             intent.putExtra("id",position);
             startActivity(intent);
         }

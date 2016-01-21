@@ -1,4 +1,4 @@
-package com.baemin.sun.gym_android;
+package activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+
+import com.baemin.sun.gym_android.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -29,6 +32,16 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        ImageView mainimgview1 = (ImageView)this.findViewById(R.id.mainimg1);
+        ImageView mainimgview2 = (ImageView)this.findViewById(R.id.mainimg2);
+        ImageView mainimgview3 = (ImageView)this.findViewById(R.id.mainimg3);
+        ImageView mainimgview4 = (ImageView)this.findViewById(R.id.mainimg4);
+
+        mainimgview1.setImageResource(R.drawable.mainimg1);
+        mainimgview2.setImageResource(R.drawable.mainimg2);
+        mainimgview3.setImageResource(R.drawable.mainimg3);
+        mainimgview4.setImageResource(R.drawable.mainimg4);
     }
 
     @Override
@@ -70,16 +83,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_gym) {
-            Intent intent = new Intent(MainActivity.this,SearchGym.class);
+            Intent intent = new Intent(MainActivity.this,SearchGymActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_region) {
-            Intent intent = new Intent(MainActivity.this,SearchGymByRegion.class);
+            Intent intent = new Intent(MainActivity.this,SearchGymByRegionActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_bmi) {
-            Intent intent = new Intent(MainActivity.this,BMI.class);
+            Intent intent = new Intent(MainActivity.this,BMIActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_part) {
-            Intent intent = new Intent(MainActivity.this,SearchExerciseByPart.class);
+            Intent intent = new Intent(MainActivity.this,SearchExerciseByPartActivity.class);
             startActivity(intent);
         } /*else if (id == R.id.nav_share) {
 

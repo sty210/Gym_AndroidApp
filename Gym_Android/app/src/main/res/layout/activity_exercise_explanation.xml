@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.baemin.sun.gym_android.ExerciseExplanation">
+    tools:context="activitys.ExerciseExplanationActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,6 +21,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <TextView
+                android:id="@+id/tv_exep_nm"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="운동명"
@@ -49,7 +50,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
         <TextView
-            android:id="@+id/tv_exep"
+            android:id="@+id/tv_exep_mth"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="운동법 : "

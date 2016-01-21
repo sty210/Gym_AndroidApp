@@ -1,14 +1,16 @@
-package com.baemin.sun.gym_android;
+package activitys;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-public class SearchGymDetail extends AppCompatActivity {
+import com.baemin.sun.gym_android.R;
+import com.baemin.sun.Adapters.ViewPagerAdapter;
+
+public class SearchGymDetailActivity extends AppCompatActivity {
 
     int id;
     ViewPager pager;
@@ -17,6 +19,9 @@ public class SearchGymDetail extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_gym_detail);
+
+        TextView tv = (TextView)this.findViewById(R.id.tv_search_gym_detail);
+        tv.setOnClickListener(listner);
 
         Intent intent = getIntent();
         id = intent.getExtras().getInt("id") + 1;
@@ -34,6 +39,15 @@ public class SearchGymDetail extends AppCompatActivity {
         pager.setAdapter(adapter);
 
     }
+
+    // Create an anonymous implementation of OnClickListener
+    private View.OnClickListener listner = new View.OnClickListener() {
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(),ReviewsActivity.class);
+            startActivity(intent);
+
+        }
+    };
 
 
 }

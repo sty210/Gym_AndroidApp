@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.baemin.sun.gym_android.MainActivity"
+    tools:context="activitys.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
         <LinearLayout
@@ -18,25 +18,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <TextView
+                <ImageView
+                    android:id="@+id/mainimg1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="헬스장검색"
+                    android:scaleType="fitXY"
                     android:background="#eee">
-                </TextView>
+                </ImageView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <TextView
+                <ImageView
+                    android:id="@+id/mainimg2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:background="#ddd"
-                    android:text="지역별검색">
-                </TextView>
+                    android:scaleType="fitXY">
+                </ImageView>
             </LinearLayout>
         </LinearLayout>
         <LinearLayout
@@ -48,25 +50,27 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
-                <TextView
+                <ImageView
+                    android:id="@+id/mainimg3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:background="#ccc"
-                    android:text="BMI검사">
-                </TextView>
+                    android:scaleType="fitXY">
+                </ImageView>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5">
-                <TextView
+                <ImageView
+                    android:id="@+id/mainimg4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:background="#bbb"
-                    android:text="부위별운동법">
-                </TextView>
+                    android:scaleType="fitXY">
+                </ImageView>
             </LinearLayout>
         </LinearLayout>
 </LinearLayout>

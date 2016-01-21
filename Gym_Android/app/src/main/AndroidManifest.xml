@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.baemin.sun.gym_android">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,7 +16,7 @@
         android:largeHeap="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="activitys.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,13 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BMI" />
-        <activity android:name=".ExerciseExplanation" />
-        <activity android:name=".SearchExerciseByPart" />
-        <activity android:name=".SearchGymByRegion" />
-        <activity android:name=".SearchGym" />
-        <activity android:name=".SearchGymDetail" />
-        <activity android:name=".Reviews"></activity>
+        <activity android:name="activitys.BMIActivity" />
+        <activity android:name="activitys.ExerciseExplanationActivity" />
+        <activity android:name="activitys.SearchExerciseByPartActivity" />
+        <activity android:name="activitys.SearchGymByRegionActivity" />
+        <activity android:name="activitys.SearchGymActivity" />
+        <activity android:name="activitys.SearchGymDetailActivity" />
+        <activity android:name="activitys.ReviewsActivity"></activity>
     </application>
 
 </manifest>

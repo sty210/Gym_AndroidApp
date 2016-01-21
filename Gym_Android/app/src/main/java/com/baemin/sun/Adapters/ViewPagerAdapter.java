@@ -1,10 +1,12 @@
-package com.baemin.sun.gym_android;
+package com.baemin.sun.Adapters;
 
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.baemin.sun.gym_android.R;
 
 /**
  * Created by elite on 16. 1. 20..

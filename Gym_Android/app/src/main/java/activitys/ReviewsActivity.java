@@ -1,9 +1,11 @@
-package com.baemin.sun.gym_android;
+package activitys;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class Reviews extends AppCompatActivity {
+import com.baemin.sun.gym_android.R;
+
+public class ReviewsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
