@@ -5,6 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baemin.sun.gym_android.R;
@@ -12,19 +13,39 @@ import com.baemin.sun.Adapters.ViewPagerAdapter;
 
 public class SearchGymDetailActivity extends AppCompatActivity {
 
-    int id;
     ViewPager pager;
+    private ImageView mImage;
+    private int mGymId;
+    private String mGymName;
+    private String mGymAddress;
+    private String mGymImgUrl;
+    private String mGymTel;
+    private TextView mTvExplain;
+    private TextView mTvGymAddress;
+    private TextView mTvTel;
+    private TextView mReviewBtn;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_gym_detail);
-
-        TextView tv = (TextView)this.findViewById(R.id.tv_search_gym_detail);
-        tv.setOnClickListener(listner);
+        mTvExplain = (TextView)this.findViewById(R.id.tv_gymexplain);
+        mTvGymAddress = (TextView)this.findViewById(R.id.tv_gymaddress);
+        mTvTel = (TextView)this.findViewById(R.id.tv_gymtel);
+        mReviewBtn = (TextView)this.findViewById(R.id.tv_search_gym_detail);
+        mReviewBtn.setOnClickListener(listner);
 
         Intent intent = getIntent();
-        id = intent.getExtras().getInt("id") + 1;
+
+        mGymId = intent.getExtras().getInt("gymId");
+        mGymName = intent.getExtras().getString("gymName");
+        mGymAddress = intent.getExtras().getString("gymAddress");
+        mGymImgUrl = intent.getExtras().getString("gymImgUrl");
+        mGymTel = intent.getExtras().getString("gymTel");
+
+        mTvGymAddress.setText("위치 : "+mGymAddress);
+        mTvTel.setText("전화번호 : "+mGymTel);
 
         pager = (ViewPager)findViewById(R.id.vp_search_gym_detail);
 

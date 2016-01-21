@@ -30,6 +30,13 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.2">
+            <TextView
+                android:id="@+id/searchgymbtn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ddd"
+                android:text="검색"
+                android:gravity="center"/>
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

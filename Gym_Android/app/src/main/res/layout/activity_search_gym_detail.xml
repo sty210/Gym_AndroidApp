@@ -27,6 +27,7 @@
             android:layout_weight="6"
             android:background="#ddd">
             <TextView
+                android:id="@+id/tv_gymexplain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="헬스장 설명 : 연예인들이 많이 다니는 헬스장이며, 심지어 트레이너도 연예인입니다. 일단 한 번 상담받아 보세요 ^^."/>
@@ -37,6 +38,7 @@
             android:layout_weight="2"
             android:background="#ccc">
             <TextView
+                android:id="@+id/tv_gymaddress"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="위치 : 서울특별시 송파구 잠실동 석촌빌딩 2층"/>
@@ -47,6 +49,7 @@
             android:layout_weight="2"
             android:background="#bbb">
             <TextView
+                android:id="@+id/tv_gymtel"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="전화번호 : 02-1234-5678"/>
