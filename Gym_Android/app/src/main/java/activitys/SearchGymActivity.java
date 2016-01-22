@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -30,18 +31,42 @@ import retrofit.Retrofit;
 
 public class SearchGymActivity extends AppCompatActivity {
 
-    private ArrayList<GymsRowData> mDatas = new ArrayList<GymsRowData>();
+    private ArrayList<GymsRowData> mDatas;
     private ListView mListview;
     private List<Gyms> mGymsList;
     private TextView mSearchGymBtn;
+    private String mInput;
+    private EditText mEtSearchGym;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_gym);
 
+        mEtSearchGym = (EditText) findViewById(R.id.et_searchgym);
         mSearchGymBtn = (TextView)findViewById(R.id.searchgymbtn);
-        //mSearchGymBtn.setOnClickListener(listner);
+        mSearchGymBtn.setOnClickListener(clickListner);
+
+        mDatas = new ArrayList<GymsRowData>();
+        mInput = mEtSearchGym.getText().toString();
+        updateGymList();
+    }
+
+    private View.OnClickListener clickListner = new View.OnClickListener() {
+        public void onClick(View v) {
+
+            updateGymList();
+        }
+    };
+
+    public void updateGymList(){
+
+        mDatas = new ArrayList<GymsRowData>();
+        if(mEtSearchGym.getText().toString().isEmpty()){
+            mInput = "empty";
+        }else{
+            mInput = mEtSearchGym.getText().toString();
+        }
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://10.10.0.158:3000")
@@ -54,18 +79,14 @@ public class SearchGymActivity extends AppCompatActivity {
             @Override
             public void onResponse(Response<List<Gyms>> response, Retrofit retrofit) {
                 mGymsList = response.body();
-
                 for (Gyms gym : mGymsList) {
-                    /*Log.i("gym_id", gym.getId() + "");
-                    Log.i("gym_nm", gym.getGym_nm());
-                    Log.i("gym_img", gym.getGym_img());
-                    Log.i("gym_adr", gym.getGym_adr());
-                    Log.i("gym_tel", gym.getGym_tel());
-                    Log.i("gym_tel", gym.getRgn_cd()+"");
-                    */
-
-                    mDatas.add(new GymsRowData(gym.getId(), gym.getGym_nm(), gym.getGym_img(), gym.getGym_adr(), gym.getGym_tel(), gym.getRgn_cd()));
-
+                    if(mInput.equals("empty")) {
+                        mDatas.add(new GymsRowData(gym.getId(), gym.getGym_nm(), gym.getGym_img(), gym.getGym_adr(), gym.getGym_tel(), gym.getRgn_cd(), gym.getGym_ep()));
+                    }else{
+                        if (mInput.equals(gym.getGym_nm())) {
+                            mDatas.add(new GymsRowData(gym.getId(), gym.getGym_nm(), gym.getGym_img(), gym.getGym_adr(), gym.getGym_tel(), gym.getRgn_cd(),gym.getGym_ep()));
+                        }
+                    }
                 }
             }
 
@@ -96,6 +117,8 @@ public class SearchGymActivity extends AppCompatActivity {
             intent.putExtra("gymAddress",mDatas.get(position).getGymAddress());
             intent.putExtra("gymImgUrl",mDatas.get(position).getImgUrl());
             intent.putExtra("gymTel",mDatas.get(position).getGymTel());
+            intent.putExtra("gymExplanation",mDatas.get(position).getGymExplanation());
+
             startActivity(intent);
         }
     };

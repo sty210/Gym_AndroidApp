@@ -20,6 +20,7 @@ public class SearchGymDetailActivity extends AppCompatActivity {
     private String mGymAddress;
     private String mGymImgUrl;
     private String mGymTel;
+    private String mGymExplanation;
     private TextView mTvExplain;
     private TextView mTvGymAddress;
     private TextView mTvTel;
@@ -43,9 +44,11 @@ public class SearchGymDetailActivity extends AppCompatActivity {
         mGymAddress = intent.getExtras().getString("gymAddress");
         mGymImgUrl = intent.getExtras().getString("gymImgUrl");
         mGymTel = intent.getExtras().getString("gymTel");
+        mGymExplanation = intent.getExtras().getString("gymExplanation");
 
-        mTvGymAddress.setText("위치 : "+mGymAddress);
-        mTvTel.setText("전화번호 : "+mGymTel);
+        mTvExplain.setText("헬스장 소개 : " + mGymExplanation);
+        mTvGymAddress.setText("위치 : " + mGymAddress);
+        mTvTel.setText("전화번호 : " + mGymTel);
 
         pager = (ViewPager)findViewById(R.id.vp_search_gym_detail);
 
@@ -65,8 +68,9 @@ public class SearchGymDetailActivity extends AppCompatActivity {
     private View.OnClickListener listner = new View.OnClickListener() {
         public void onClick(View v) {
             Intent intent = new Intent(getApplicationContext(),ReviewsActivity.class);
+            intent.putExtra("gymId",mGymId);
+            intent.putExtra("gymName",mGymName);
             startActivity(intent);
-
         }
     };
 

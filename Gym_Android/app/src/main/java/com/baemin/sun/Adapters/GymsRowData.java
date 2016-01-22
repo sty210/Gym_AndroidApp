@@ -10,15 +10,26 @@ public class GymsRowData {
     public String gymTel;
     public String gymAddress;
     public int rgnCd;
+    public String gymExplanation;
 
 
-    public GymsRowData(int id, String gymName, String imgUrl, String gymAddress, String gymTel, int rgnCd) {
+    public GymsRowData(int id, String gymName, String imgUrl, String gymAddress, String gymTel, int rgnCd, String gymExplanation) {
         this.id=id;
         this.gymName= gymName;
         this.imgUrl=imgUrl;
         this.gymTel=gymTel;
         this.gymAddress = gymAddress;
         this.rgnCd = rgnCd;
+        this.gymExplanation = gymExplanation;
+    }
+
+    public void setGymExplanation(String gymExplanation) {
+        this.gymExplanation = gymExplanation;
+    }
+
+    public String getGymExplanation() {
+
+        return gymExplanation;
     }
 
     public int getId() {

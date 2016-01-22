@@ -10,7 +10,12 @@ public class Gyms {
     public String gym_img;
     public String gym_adr;
     public String gym_tel;
+    public String gym_ep;
 
+
+    public String getGym_ep() {
+        return gym_ep;
+    }
 
     public void setId(int id) {
         this.id = id;
