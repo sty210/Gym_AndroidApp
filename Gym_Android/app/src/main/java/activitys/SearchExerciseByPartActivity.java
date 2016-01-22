@@ -1,10 +1,12 @@
 package activitys;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,14 +29,16 @@ import retrofit.Retrofit;
 
 public class SearchExerciseByPartActivity extends AppCompatActivity {
 
-    private ArrayList<RowData> mDatas = new ArrayList<RowData>();
+    private ArrayList<RowData> mDatas;
     private ListView mListview;
-    private List<List<Exercises>> mExercisesList;
     private String mParamType;
     private int mParamId;
     private TextView mOkBtn;
     private EditText mEtPart;
     private String input;
+    private String mIp = "http://192.168.0.4";
+    private String mPort = "3000";
+    private RowDataAdapter mAdapter;
 
 
     @Override
@@ -43,10 +47,18 @@ public class SearchExerciseByPartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_exercise_by_part);
         mEtPart = (EditText)findViewById(R.id.et_part);
         mOkBtn = (TextView)findViewById(R.id.tv_part);
-        mOkBtn.setOnClickListener(listner);
+        mOkBtn.setOnClickListener(clickListner);
+
+        mDatas = new ArrayList<RowData>();
+        mListview= (ListView)findViewById(R.id.lv_search_exercise_by_part);
+
+        mDatas = new ArrayList<RowData>();
+        mAdapter= new RowDataAdapter(getApplicationContext(), getLayoutInflater() , mDatas);
+        mListview.setAdapter(mAdapter);
+        mListview.setOnItemClickListener(itemClickListener);
     }
 
-    private View.OnClickListener listner = new View.OnClickListener() {
+    private View.OnClickListener clickListner = new View.OnClickListener() {
         public void onClick(View v) {
             input = mEtPart.getText().toString();
 
@@ -66,33 +78,48 @@ public class SearchExerciseByPartActivity extends AppCompatActivity {
 
             mParamType = "expt";
 
-            //data를 비워준다. 연속으로 몇번 더 입력 해볼 수도 있으니.. 겹치는거 방지.
-            mDatas = new ArrayList<RowData>();
             startLogic();
+
+            //그냥은 안되고 OS의 Handler를 이용하여 딜레이 후 notify해야지만 listview가 정상적으로 refresh되는 현상 발견
+            //아마도 사진 업로드에 시간이 너무 많이 걸려서 그런 것으로.. 예상.
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mAdapter.notifyDataSetChanged();
+                }
+            }, 1000);
+
+            //키보드 내려주기 센스!
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     };
 
     void startLogic(){
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.10.0.158:3000")
+                .baseUrl(mIp + ":" + mPort)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         TyEx service = retrofit.create(TyEx.class);
 
         Call<List<List<Exercises>>> exercises = service.listExercises(mParamType, mParamId);
 
+        //data를 비워준다. 연속으로 몇번 더 검사 해볼 수도 있으니.. 겹치는거 방지.
+        mDatas.clear();
+
         exercises.enqueue(new Callback<List<List<Exercises>>>() {
             @Override
             public void onResponse(Response<List<List<Exercises>>> response, Retrofit retrofit) {
-                mExercisesList = response.body();
+                List<List<Exercises>> exercisesList = response.body();
 
-                for (List<Exercises> ex : mExercisesList) {
-                    Log.i("ex_id", ex.get(0).id + "");
+                for (List<Exercises> ex : exercisesList) {
+                    /*Log.i("ex_id", ex.get(0).id + "");
                     Log.i("ex_mth_img", ex.get(0).ex_mth_img);
                     Log.i("ex_mth_ep", ex.get(0).ex_mth_ep);
                     Log.i("cd_nm", ex.get(1).cd_nm);
-
+                    */
                     mDatas.add(new RowData(ex.get(0).id, ex.get(1).cd_nm, ex.get(0).ex_mth_img, ex.get(0).ex_mth_ep));
 
                 }
@@ -104,17 +131,9 @@ public class SearchExerciseByPartActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-        mListview= (ListView)findViewById(R.id.lv_search_exercise_by_part);
-
-        RowDataAdapter adapter= new RowDataAdapter(getApplicationContext(), getLayoutInflater() , mDatas);
-
-        mListview.setAdapter(adapter);
-        mListview.setOnItemClickListener(listener);
     }
-    AdapterView.OnItemClickListener listener= new AdapterView.OnItemClickListener() {
+
+    AdapterView.OnItemClickListener itemClickListener= new AdapterView.OnItemClickListener() {
         //첫번째 파라미터 : 클릭된 아이템을 보여주고 있는 AdapterView 객체(여기서는 ListView객체)
         //두번째 파라미터 : 클릭된 아이템 뷰
         //세번째 파라미터 : 클릭된 아이템의 위치(ListView이 첫번째 아이템(가장위쪽)부터 차례대로 0,1,2,3.....)

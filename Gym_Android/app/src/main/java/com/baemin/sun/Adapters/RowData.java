@@ -1,7 +1,5 @@
 package com.baemin.sun.Adapters;
 
-import android.widget.ImageView;
-
 /**
  * Created by elite on 16. 1. 19..
  */

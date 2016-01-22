@@ -1,10 +1,11 @@
 package activitys;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -13,16 +14,12 @@ import android.widget.TextView;
 import com.baemin.sun.Adapters.GymRowDataAdapter;
 import com.baemin.sun.Adapters.GymsRowData;
 import com.baemin.sun.gym_android.R;
-import com.baemin.sun.Adapters.RowData;
-import com.baemin.sun.Adapters.RowDataAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import network.Exercises;
 import network.GymRequest;
 import network.Gyms;
-import network.TyEx;
 import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -33,10 +30,12 @@ public class SearchGymActivity extends AppCompatActivity {
 
     private ArrayList<GymsRowData> mDatas;
     private ListView mListview;
-    private List<Gyms> mGymsList;
     private TextView mSearchGymBtn;
     private String mInput;
     private EditText mEtSearchGym;
+    private String mIp = "http://192.168.0.4";
+    private String mPort = "3000";
+    private GymRowDataAdapter mGymAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +48,13 @@ public class SearchGymActivity extends AppCompatActivity {
 
         mDatas = new ArrayList<GymsRowData>();
         mInput = mEtSearchGym.getText().toString();
+
+        mListview= (ListView)findViewById(R.id.lv_search_gym);
+        mGymAdapter = new GymRowDataAdapter(getApplicationContext(), getLayoutInflater() , mDatas);
+        mListview.setAdapter(mGymAdapter);
+        mListview.setOnItemClickListener(listener);
+
+        //가장 처음에는 전체 리스트를 한번에 보여준다
         updateGymList();
     }
 
@@ -56,12 +62,25 @@ public class SearchGymActivity extends AppCompatActivity {
         public void onClick(View v) {
 
             updateGymList();
+
+            //그냥은 안되고 OS의 Handler를 이용하여 딜레이 후 notify해야지만 listview가 정상적으로 refresh되는 현상 발견
+            //아마도 사진 업로드에 시간이 너무 많이 걸려서 그런 것으로.. 예상.
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mGymAdapter.notifyDataSetChanged();
+                }
+            }, 1000);
+
+            //키보드 내려주기 센스!
+            InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     };
 
     public void updateGymList(){
 
-        mDatas = new ArrayList<GymsRowData>();
         if(mEtSearchGym.getText().toString().isEmpty()){
             mInput = "empty";
         }else{
@@ -69,22 +88,25 @@ public class SearchGymActivity extends AppCompatActivity {
         }
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.10.0.158:3000")
+                .baseUrl(mIp + ":" + mPort)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         GymRequest service = retrofit.create(GymRequest.class);
         Call<List<Gyms>> gyms = service.listGyms();
 
+        //data를 비워준다. 연속으로 몇번 더 검사 해볼 수도 있으니.. 겹치는거 방지.
+        mDatas.clear();
+
         gyms.enqueue(new Callback<List<Gyms>>() {
             @Override
             public void onResponse(Response<List<Gyms>> response, Retrofit retrofit) {
-                mGymsList = response.body();
-                for (Gyms gym : mGymsList) {
-                    if(mInput.equals("empty")) {
+                List<Gyms> gymsList = response.body();
+                for (Gyms gym : gymsList) {
+                    if (mInput.equals("empty")) {
                         mDatas.add(new GymsRowData(gym.getId(), gym.getGym_nm(), gym.getGym_img(), gym.getGym_adr(), gym.getGym_tel(), gym.getRgn_cd(), gym.getGym_ep()));
-                    }else{
+                    } else {
                         if (mInput.equals(gym.getGym_nm())) {
-                            mDatas.add(new GymsRowData(gym.getId(), gym.getGym_nm(), gym.getGym_img(), gym.getGym_adr(), gym.getGym_tel(), gym.getRgn_cd(),gym.getGym_ep()));
+                            mDatas.add(new GymsRowData(gym.getId(), gym.getGym_nm(), gym.getGym_img(), gym.getGym_adr(), gym.getGym_tel(), gym.getRgn_cd(), gym.getGym_ep()));
                         }
                     }
                 }
@@ -96,12 +118,6 @@ public class SearchGymActivity extends AppCompatActivity {
             }
         });
 
-        mListview= (ListView)findViewById(R.id.lv_search_gym);
-
-        GymRowDataAdapter gymAdapter= new GymRowDataAdapter(getApplicationContext(), getLayoutInflater() , mDatas);
-
-        mListview.setAdapter(gymAdapter);
-        mListview.setOnItemClickListener(listener);
     }
 
     AdapterView.OnItemClickListener listener= new AdapterView.OnItemClickListener() {
